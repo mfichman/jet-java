@@ -14,10 +14,16 @@ import com.bulletphysics.dynamics.DynamicsWorld;
 import com.bulletphysics.dynamics.constraintsolver.ConstraintSolver;
 import com.bulletphysics.dynamics.constraintsolver.SequentialImpulseConstraintSolver;
 import com.bulletphysics.extras.gimpact.GImpactCollisionAlgorithm;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.ByteBuffer;
+import java.util.Enumeration;
+import java.util.jar.JarFile;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -97,17 +103,35 @@ public class LibrariesTest {
     // @Test
     // public void hello() {}
     @Test
-    public void rhino() throws ScriptException, FileNotFoundException {
+    public void rhino() throws ScriptException, IOException, URISyntaxException {
         ScriptEngineManager factory = new ScriptEngineManager();
         ScriptEngine engine = factory.getEngineByName("JavaScript");
         ScriptContext context = engine.getContext();
         context.setAttribute("name", "Matt", ScriptContext.ENGINE_SCOPE);
         engine.eval("println(name)");
 
-        FileInputStream in = new FileInputStream("script/Test.js");
-        InputStreamReader reader = new InputStreamReader(in);
+        URL url = getClass().getResource("/org/jet/LibrariesTest.js");
+        engine.eval(new InputStreamReader(url.openStream()));
 
-        engine.eval(reader);
+        final String className = getClass().getSimpleName() + ".class";
+        final String classPath = getClass().getResource(className).toString();
+
+        if (classPath.startsWith("jar")) {
+            String path = getClass().getResource("/org/jet").toString();
+            System.out.println(path);
+            String jarPath = path.substring(path.indexOf("/"), path.indexOf("!"));
+            ZipFile zipFile = new JarFile(jarPath);
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = entries.nextElement();
+                System.out.println(entry.getName());
+            }
+        } else {
+            URL directory = getClass().getResource("/org/jet");
+            for (String entry : new File(directory.toURI()).list()) {
+                System.out.println(entry);
+            }
+        }
     }
 
     @Test

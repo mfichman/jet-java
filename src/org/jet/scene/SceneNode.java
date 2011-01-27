@@ -22,12 +22,50 @@
  *  THE SOFTWARE.
  */
 
-package org.jet;
+package org.jet.scene;
 
 /**
  *
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
-public class SceneNode {
+public abstract class SceneNode {
 
+    public static interface Functor {
+        public void visit(MeshObject node);
+        public void visit(Camera camera);
+        public void visit(ParticleSystem particleSystem);
+        public void visit(QuadChain quadChain);
+        public void visit(QuadSet quadSet);
+        public void visit(AudioSource audioSource);
+        public void visit(Light light);
+        public void visit(TransformNode transformNode);
+    }
+
+    private TransformNode parent;
+    private SceneNode root;
+
+    /**
+     * @return the parent
+     */
+    public TransformNode getParent() {
+        return parent;
+    }
+
+    /**
+     * Sets the parent
+     */
+    public void setParent(TransformNode parent) {
+        this.parent.removeChild(this);
+        this.parent = parent;
+        this.parent.addChild(this);
+    }
+
+    /**
+     * @return the root
+     */
+    public SceneNode getRoot() {
+        return root;
+    }
+
+    public abstract void visit(Functor functor);
 }
