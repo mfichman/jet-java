@@ -30,7 +30,7 @@ import javax.vecmath.Vector3f;
 import org.newdawn.slick.opengl.Texture;
 
 /**
- *
+ * 
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
 public class ParticleSystem extends SceneNode {

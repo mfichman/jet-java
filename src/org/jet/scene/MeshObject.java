@@ -28,7 +28,7 @@ import org.jet.resource.Mesh;
 import org.jet.resource.Material;
 
 /**
- *
+ * A mesh object is a triangle mesh with a material.
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
 public class MeshObject extends SceneNode {
@@ -37,6 +37,8 @@ public class MeshObject extends SceneNode {
     private Mesh mesh;
 
     /**
+     * Returns the material, which controls the color, texture, and shading
+     * technique of this object.
      * @return the material
      */
     public Material getMaterial() {
@@ -44,6 +46,8 @@ public class MeshObject extends SceneNode {
     }
 
     /**
+     * Sets the material, which controls the color, texture, and shading
+     * technique of this object.
      * @param material the material to set
      */
     public void setMaterial(Material material) {
@@ -51,6 +55,7 @@ public class MeshObject extends SceneNode {
     }
 
     /**
+     * Returns the mesh, which contains the 3D point data for this object.
      * @return the mesh
      */
     public Mesh getMesh() {
@@ -58,6 +63,7 @@ public class MeshObject extends SceneNode {
     }
 
     /**
+     * Sets the mesh, which contains the 3D point data for this object.
      * @param mesh the mesh to set
      */
     public void setMesh(Mesh mesh) {

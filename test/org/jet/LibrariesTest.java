@@ -50,7 +50,6 @@ import org.lwjgl.opengl.DisplayMode;
 public class LibrariesTest {
 
     public LibrariesTest() {
-
     }
 
     @BeforeClass
@@ -97,21 +96,22 @@ public class LibrariesTest {
         }
     }
 
-    // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
     // @Test
     // public void hello() {}
     @Test
     public void rhino() throws ScriptException, IOException, URISyntaxException {
+
         ScriptEngineManager factory = new ScriptEngineManager();
         ScriptEngine engine = factory.getEngineByName("JavaScript");
         ScriptContext context = engine.getContext();
         context.setAttribute("name", "Matt", ScriptContext.ENGINE_SCOPE);
         engine.eval("println(name)");
 
-        URL url = getClass().getResource("/org/jet/LibrariesTest.js");
+        URL url = getClass().getResource("/org/jet/JSON.js");
         engine.eval(new InputStreamReader(url.openStream()));
+
 
         final String className = getClass().getSimpleName() + ".class";
         final String classPath = getClass().getResource(className).toString();

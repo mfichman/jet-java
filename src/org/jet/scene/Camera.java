@@ -25,7 +25,9 @@
 package org.jet.scene;
 
 /**
- *
+ * Places a camera within the scene graph.  The camera can be made active,
+ * and thus begin rendering the scene from that vantage point, by calling
+ * setActive().
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
 public class Camera extends SceneNode {
@@ -40,20 +42,25 @@ public class Camera extends SceneNode {
     }
 
     /**
-     * @return the fieldOfView
+     * The field of view is the angle of the view frustum in degrees.  It
+     * controls the wedge that is visible from this camera.
+     * @return the field of view
      */
     public float getFieldOfView() {
         return fieldOfView;
     }
 
     /**
-     * @param fieldOfView the fieldOfView to set
+     * Sets the field of view, in degrees.
+     * @param fieldOfView the field of view
      */
     public void setFieldOfView(float fieldOfView) {
         this.fieldOfView = fieldOfView;
     }
 
     /**
+     * Returns the clipping distance.  This is the maximum distance that an
+     * object will be visible from.
      * @return the farClippingDistance
      */
     public float getFarClippingDistance() {
@@ -61,6 +68,8 @@ public class Camera extends SceneNode {
     }
 
     /**
+     * Sets the far clipping distance.  This is the maximum distance that an
+     * object will be visible from.
      * @param farClippingDistance the farClippingDistance to set
      */
     public void setFarClippingDistance(float farClippingDistance) {
@@ -68,6 +77,8 @@ public class Camera extends SceneNode {
     }
 
     /**
+     * Returns the near clipping distance.  This is the minimum distance that
+     * an object will be visible from.
      * @return the nearClippingDistance
      */
     public float getNearClippingDistance() {
@@ -75,6 +86,8 @@ public class Camera extends SceneNode {
     }
 
     /**
+     * Sets the near clipping distance.  This is the minimum distance that an
+     * object will be visible from.
      * @param nearClippingDistance the nearClippingDistance to set
      */
     public void setNearClippingDistance(float nearClippingDistance) {
@@ -82,6 +95,7 @@ public class Camera extends SceneNode {
     }
 
     /**
+     * Returns true if the camera is the camera currently used for rendering.
      * @return the active
      */
     public boolean isActive() {
@@ -89,6 +103,7 @@ public class Camera extends SceneNode {
     }
 
     /**
+     * Returns true if the camera is the camera currently used for rendering.
      * @param active the active to set
      */
     public void setActive(boolean active) {

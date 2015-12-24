@@ -22,24 +22,12 @@
  *  THE SOFTWARE.
  */
 
-package org.jet;
-
-import com.bulletphysics.dynamics.RigidBody;
-import org.jet.scene.SceneNode;
+package org.jet.scene;
 
 /**
  *
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
-public class Actor {
+public class MaterialNode {
 
-    public interface Listener {
-        public void onState();
-    }
-    
-    private String state;
-    private long player;
-    private boolean active;
-    private RigidBody body;
-    private SceneNode rootNode;
 }

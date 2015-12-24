@@ -34,11 +34,20 @@ import java.io.InputStream;
 import static org.lwjgl.opengl.GL20.*;
 
 /**
- *
+ * Utilities for loading GLSL shaders from a file or input stream.
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
 public class ShaderLoader {
 
+
+    /**
+     * Loads a shader using an input stream for the fragment shader, and
+     * another input stream for the vertex shader.
+     * @param frag the fragment shader
+     * @param vert the vertex shader
+     * @return the linked and loaded shader program
+     * @throws IOException if the shader couldn't be loaded
+     */
     public static Shader getShader(InputStream frag, InputStream vert) throws IOException {
 
         ShaderImpl shader = new ShaderImpl();
@@ -61,6 +70,7 @@ public class ShaderLoader {
 
             String errors = getErrors(shader);
             if (errors != null) {
+                shader.release();
                 throw new IOException(errors);
             }
 
@@ -71,6 +81,12 @@ public class ShaderLoader {
         return shader;
     }
 
+    /**
+     * Returns the string containing all code in the input stream.
+     * @param in the input stream
+     * @return a string (input stream read into a string)
+     * @throws IOException
+     */
     public static String getCode(InputStream in) throws IOException {
         StringBuilder buffer = new StringBuilder();
         String line;
@@ -81,6 +97,11 @@ public class ShaderLoader {
         return buffer.toString();
     }
 
+    /**
+     * Returns any errors encountered while loading the shader.
+     * @param shader the shader to check
+     * @return the errors
+     */
     public static String getErrors(Shader shader) {
         IntBuffer success = BufferUtils.createIntBuffer(1);
         glGetProgram(shader.getProgramID(), GL_LINK_STATUS, success);

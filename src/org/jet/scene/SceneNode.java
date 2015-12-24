@@ -24,12 +24,22 @@
 
 package org.jet.scene;
 
+import javax.vecmath.Matrix4f;
+import javax.vecmath.Quat4f;
+import javax.vecmath.Vector3f;
+
 /**
- *
+ * A scene node is an object that can be attached to the scene graph and
+ * rendered by the renderer.
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
 public abstract class SceneNode {
 
+    /**
+     * The scene node functor provides an iterator for traversing the scene
+     * graph using double dynamic dispatch.  By implementing the functor
+     * interface, clients can iterate over the scene nodes.
+     */
     public static interface Functor {
         public void visit(MeshObject node);
         public void visit(Camera camera);
@@ -38,29 +48,84 @@ public abstract class SceneNode {
         public void visit(QuadSet quadSet);
         public void visit(AudioSource audioSource);
         public void visit(Light light);
-        public void visit(TransformNode transformNode);
+        public void visit(CompoundNode transformNode);
     }
 
-    private TransformNode parent;
+    private CompoundNode parent;
     private SceneNode root;
+    private Vector3f position;
+    private Quat4f rotation;
+    private Matrix4f transform;
 
     /**
-     * @return the parent
+     * Returns the transform (rotation and translation) that affects this
+     * scene node.
+     * @return the transform DO NOT MODIFY!
      */
-    public TransformNode getParent() {
+    public Matrix4f getTransform() {
+        transform.set(rotation, position, 1.0f);
+        return transform;
+    }
+
+    /**
+     * Returns the position of this scene node relative to the parent node.
+     * @return the position
+     */
+    public Vector3f getPosition() {
+        return position;
+    }
+
+    /**
+     * Sets the position of this scene node relative to the parent node.
+     * @param position the position to set
+     */
+    public void setPosition(Vector3f position) {
+        this.position = position;
+    }
+
+    /**
+     * Returns the rotation of this scene node relative to the parent node.
+     * @return the rotation
+     */
+    public Quat4f getRotation() {
+        return rotation;
+    }
+
+    /**
+     * Sets the rotation of this scene node relative to the parent node.
+     * @param rotation the rotation to set
+     */
+    public void setRotation(Quat4f rotation) {
+        this.rotation = rotation;
+    }
+
+    /**
+     * Returns the parent of this scene node.
+     * @return the parent the parent of this scene node.
+     */
+    public CompoundNode getParent() {
         return parent;
     }
 
     /**
-     * Sets the parent
+     * Sets the parent of this scene node.
+     * @param Compound node
      */
-    public void setParent(TransformNode parent) {
-        this.parent.removeChild(this);
+    public void setParent(CompoundNode parent) {
+        if (this.parent != null) {
+            this.parent.removeChild(this);
+        }
         this.parent = parent;
-        this.parent.addChild(this);
+        if (this.parent != null) {
+            this.parent.addChild(this);
+            this.root = this.parent.getRoot();
+        } else {
+            this.root = null;
+        }
     }
 
     /**
+     * Returns the root node of the scene graph that this node belongs to.
      * @return the root
      */
     public SceneNode getRoot() {

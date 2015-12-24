@@ -25,9 +25,52 @@
 package org.jet.util;
 
 /**
- *
+ * Represents a range (or interval) between two values.
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
 public class Range {
+    private float start;
+    private float end;
 
+    /**
+     * Creates a new range object
+     * @param start the beginning of the range
+     * @param end the end of the range
+     */
+    public Range(float start, float end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    /**
+     * Returns the start of the range.
+     * @return the start
+     */
+    public float getStart() {
+        return start;
+    }
+
+    /**
+     * Sets the start of the range.
+     * @param start the start to set
+     */
+    public void setStart(float start) {
+        this.start = start;
+    }
+
+    /**
+     * Returns the end of the range.
+     * @return the end
+     */
+    public float getEnd() {
+        return end;
+    }
+
+    /**
+     * Sets the end of the range.
+     * @param end the end to set
+     */
+    public void setEnd(float end) {
+        this.end = end;
+    }
 }

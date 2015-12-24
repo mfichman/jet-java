@@ -24,10 +24,36 @@
 
 package org.jet.resource;
 
+import java.nio.FloatBuffer;
+
 /**
- *
+ * Interface for a triangle mesh with mesh data.
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
-public class Mesh {
+public interface Mesh {
 
+    /**
+     * Returns the float buffer containing the vertices for this mesh.
+     * @return the vertex buffer
+     */
+    FloatBuffer getVertexBuffer();
+
+    /**
+     * Returns the float buffer containing the normals for this mesh.
+     * @return the normal buffer
+     */
+    FloatBuffer getNormalBuffer();
+
+    /**
+     * Returns the float buffer containing the tangents for this mesh.
+     * @return the tangent buffer
+     */
+    FloatBuffer getTangentBuffer();
+
+    /**
+     * Returns the float buffer containing the texture coordinates for this
+     * mesh.
+     * @return the texture coordinate buffer
+     */
+    FloatBuffer getTexCoordBuffer();
 }

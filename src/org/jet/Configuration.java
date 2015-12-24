@@ -46,5 +46,4 @@ public class Configuration {
     public static Float getFloat(String name) {
         return (Float)configuration.get(name);
     }
-
 }

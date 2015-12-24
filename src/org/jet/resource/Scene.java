@@ -24,40 +24,17 @@
 
 package org.jet.resource;
 
-import java.util.HashMap;
-import java.util.Map;
-import org.newdawn.slick.openal.Audio;
-import org.newdawn.slick.opengl.Texture;
+import java.util.ArrayList;
+import java.util.List;
+import org.jet.scene.Light;
+import org.jet.scene.CompoundNode;
 
 /**
  *
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
-public class ResourceManager {
+public class Scene {
 
-    private static Map<String, Texture> textures = new HashMap<String, Texture>();
-    private static Map<String, Shader> shaders = new HashMap<String, Shader>();
-    private static Map<String, Mesh> meshes = new HashMap<String, Mesh>();
-    private static Map<String, Material> materials = new HashMap<String, Material>();
-    private static Map<String, Audio> audios = new HashMap<String, Audio>();
-
-    public static Texture getTexture(String name) {
-        return textures.get(name);
-    }
-
-    public static Shader getShader(String name) {
-        return shaders.get(name);
-    }
-
-    public static Mesh getMesh(String name) {
-        return meshes.get(name);
-    }
-
-    public static Material getMaterial(String name) {
-        return materials.get(name);
-    }
-
-    public static Audio getAudio(String name) {
-        return audios.get(name);
-    }
+    private CompoundNode root = new CompoundNode();
+    private List<Light> lights = new ArrayList<Light>();
 }

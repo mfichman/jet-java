@@ -23,13 +23,13 @@
  */
 package org.jet.resource;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import net.java.games.input.Mouse;
-import org.jet.resource.ResourceManager;
-import org.jet.resource.SceneManager;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -39,24 +39,31 @@ import org.lwjgl.input.Keyboard;
 public class ScriptLoader {
 
     private static ScriptEngine engine;
-
-    public Object getScriptObject(String name) {
-        try {
-            return engine.eval("new " + name + "()");
-        } catch (ScriptException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
+    
+    /**
+     * Returns the JavaScript scripting engine, which can be used for advanced
+     * access to the scripting context.
+     * @return
+     */
     public ScriptEngine getEngine() {
         if (engine == null) {
             ScriptEngineManager factory = new ScriptEngineManager();
             engine = factory.getEngineByName("JavaScript");
             engine.getContext().setAttribute("Keyboard", Keyboard.class, ScriptContext.ENGINE_SCOPE);
-            engine.getContext().setAttribute("ResourceManager", ResourceManager.class, ScriptContext.ENGINE_SCOPE);
+            engine.getContext().setAttribute("ResourceManager", Resources.class, ScriptContext.ENGINE_SCOPE);
             engine.getContext().setAttribute("Mouse", Mouse.class, ScriptContext.ENGINE_SCOPE);
             engine.getContext().setAttribute("SceneManager", SceneManager.class, ScriptContext.ENGINE_SCOPE);
         }
         return engine;
+    }
+
+    /**
+     * Loads the given script and returns the loading result.
+     * @param in an input stream for the script
+     * @return the result of running and loading the script.
+     * @throws ScriptException if the script didn't execute properly
+     */
+    public Object getScript(InputStream in) throws ScriptException {
+        return engine.eval(new InputStreamReader(in));
     }
 }

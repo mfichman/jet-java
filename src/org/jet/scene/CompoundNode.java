@@ -24,62 +24,21 @@
 
 package org.jet.scene;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-import javax.vecmath.Matrix4f;
-import javax.vecmath.Quat4f;
-import javax.vecmath.Vector3f;
 
 /**
- *
+ * A compound scene node can contain many other child scene nodes.
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
-public class TransformNode extends SceneNode {
+public class CompoundNode extends SceneNode {
 
-    private Vector3f position;
-    private Quat4f rotation;
-    private Matrix4f transform;
-    private Set<SceneNode> children;
+    private Set<SceneNode> children = new HashSet<SceneNode>();
 
     @Override
     public void visit(Functor functor) {
         functor.visit(this);
-    }
-
-    /**
-     * @return the transform DO NOT MODIFY!
-     */
-    public Matrix4f getTransform() {
-        transform.set(rotation, position, 1.0f);
-        return transform;
-    }
-    
-    /**
-     * @return the position
-     */
-    public Vector3f getPosition() {
-        return position;
-    }
-
-    /**
-     * @param position the position to set
-     */
-    public void setPosition(Vector3f position) {
-        this.position = position;
-    }
-
-    /**
-     * @return the rotation
-     */
-    public Quat4f getRotation() {
-        return rotation;
-    }
-
-    /**
-     * @param rotation the rotation to set
-     */
-    public void setRotation(Quat4f rotation) {
-        this.rotation = rotation;
     }
 
     void removeChild(SceneNode node) {

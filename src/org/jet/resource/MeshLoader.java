@@ -22,36 +22,25 @@
  *  THE SOFTWARE.
  */
 
-package org.jet.scene;
+package org.jet.resource;
 
-import org.newdawn.slick.openal.Audio;
+import java.io.InputStream;
 
 /**
- * This object places positional audio somewhere in the scene.
+ *
  * @author Matt Fichman <matt.fichman@gmail.com>
  */
-public class AudioSource extends SceneNode {
+public class MeshLoader {
 
-    private Audio audio;
-
-    /**
-     * Returns the audio clip used by this audio source.
-     * @return the audio
-     */
-    public Audio getAudio() {
-        return audio;
+    public static Mesh getMesh(String format, InputStream resourceStream) {
+        if (format.equalsIgnoreCase("obj")) {
+            return getWavefrontOBJ(resourceStream);
+        } else {
+            throw new UnsupportedOperationException("Not yet implemented");
+        }
     }
 
-    /**
-     * Sets the audio clip used by this audio source.
-     * @param audio the audio to set
-     */
-    public void setAudio(Audio audio) {
-        this.audio = audio;
-    }
-    
-    @Override
-    public void visit(Functor functor) {
-        functor.visit(this);
+    public static Mesh getWavefrontOBJ(InputStream in) {
+        return null;
     }
 }
